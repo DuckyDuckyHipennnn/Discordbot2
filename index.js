@@ -68,8 +68,16 @@ client.on("interactionCreate", async interaction => {
   if (!interaction.isChatInputCommand()) return;
 
   if (interaction.commandName === "ping") {
-    await interaction.reply("Pong! 🏓");
-  }
+  const sent = await interaction.reply({
+    content: "Pinging...",
+    fetchReply: true
+  });
+
+  const latency = sent.createdTimestamp - interaction.createdTimestamp;
+
+  await interaction.editReply(`Pong! ${latency}ms 🏓`);
+}
+
 
   if (interaction.commandName === "obf") {
     const script = interaction.options.getString("script");
